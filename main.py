@@ -49,7 +49,7 @@ def detector_worker(s: Settings, overlay: OverlayManager, sound: SoundPlayer):
     last_fire = 0.0
 
     last_heartbeat = 0.0
-    heartbeat_interval = 3.0
+    heartbeat_interval = 1.0
 
     for p, ts in detector.loop(interval_sec=s.interval_sec, region=s.region):
         if (ts - last_heartbeat) >= heartbeat_interval:
