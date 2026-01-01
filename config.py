@@ -15,7 +15,7 @@ class Settings:
     overlay_text: str = "你不老实"
 
     # 检测参数
-    thresh: float = 0.3  # 检测阈值
+    thresh: float = 0.2  # 检测阈值，数值越高误报越少，自行测试
     interval_sec: float = 0.2  # 检测间隔（秒）
     consecutive_hits: int = 2  # 连续命中次数
     cooldown_sec: float = 3.0  # 触发冷却

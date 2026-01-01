@@ -1,4 +1,5 @@
 import ctypes
+import ctypes.wintypes
 import os
 import queue
 import time
@@ -112,6 +113,19 @@ class OverlayManager:
         exstyle = self._user32.GetWindowLongW(hwnd, GWL_EXSTYLE)
         new_style = exstyle | WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW
         self._user32.SetWindowLongW(hwnd, GWL_EXSTYLE, new_style)
+
+        # 尝试让遮罩不被捕获
+        try:
+            WDA_EXCLUDEFROMCAPTURE = 0x11
+            self._user32.SetWindowDisplayAffinity.argtypes = [ctypes.wintypes.HWND, ctypes.wintypes.DWORD]
+            self._user32.SetWindowDisplayAffinity.restype = ctypes.wintypes.BOOL
+
+            ok = self._user32.SetWindowDisplayAffinity(hwnd, WDA_EXCLUDEFROMCAPTURE)
+            if not ok:
+                err = ctypes.GetLastError()
+                print(f"SetWindowDisplayAffinity 失败, err={err}")
+        except Exception:
+            pass
 
         self._hwnd = hwnd
         root.withdraw()

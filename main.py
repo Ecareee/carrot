@@ -49,10 +49,10 @@ def detector_worker(s: Settings, overlay: OverlayManager, sound: SoundPlayer):
     last_fire = 0.0
 
     last_heartbeat = 0.0
-    heartbeat_every = 3.0
+    heartbeat_interval = 3.0
 
     for p, ts in detector.loop(interval_sec=s.interval_sec, region=s.region):
-        if (ts - last_heartbeat) >= heartbeat_every:
+        if (ts - last_heartbeat) >= heartbeat_interval:
             last_heartbeat = ts
             since_fire = ts - last_fire if last_fire > 0 else -1
             since_fire_str = "还未触发过" if since_fire < 0 else f"{since_fire:.1f}s 前"
